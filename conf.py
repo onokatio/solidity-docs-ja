@@ -58,8 +58,9 @@ copyright = '2016-2018, Ethereum'
 # built documents.
 #
 # The short X.Y version.
-with open('../CMakeLists.txt', 'r') as f:
-    version = re.search('PROJECT_VERSION "([^"]+)"', f.read()).group(1)
+#with open('../CMakeLists.txt', 'r') as f:
+#    version = re.search('PROJECT_VERSION "([^"]+)"', f.read()).group(1)
+version = "0.4.24"
 # The full version, including alpha/beta/rc tags.
 if os.path.isfile('../prerelease.txt') != True or os.path.getsize('../prerelease.txt') == 0:
     release = version

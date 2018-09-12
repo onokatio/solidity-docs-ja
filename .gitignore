@@ -1,0 +1,3 @@
+docs/_build
+docs/utils/__pycache__
+docs/utils/*.pyc
