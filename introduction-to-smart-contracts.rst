@@ -339,18 +339,40 @@ returns that code when executed.
 Gas
 ===
 
-Upon creation, each transaction is charged with a certain amount of **gas**,
-whose purpose is to limit the amount of work that is needed to execute
-the transaction and to pay for this execution. While the EVM executes the
-transaction, the gas is gradually depleted according to specific rules.
 
-The **gas price** is a value set by the creator of the transaction, who
-has to pay ``gas_price * gas`` up front from the sending account.
+
+
+
+
+
+Upon creation, each transaction is charged with a certain amount of **gas**,
+トランザクション生成時、それぞれのトランザクションにはある量のgasが課せられます。
+
+whose purpose is to limit the amount of work that is needed to execute
+the transaction and to pay for this execution.
+gasの目的はトランザクション実行時に必要な処理の量を制限することであり、またgasそのもので実行にかかる費用を支払うことにあります。
+
+While the EVM executes the
+transaction, the gas is gradually depleted according to specific rules.
+EVMがトランザクションを実行している間は、gasはルールに従って徐々に消費されていきます。
+
+The **gas price** is a value set by the creator of the transaction,
+gas priceはトランザクションの作成者が設定する値であり、
+
+who has to pay ``gas_price * gas`` up front from the sending account.
+そのトランザクションの作成者はgas priceと必要なgasの量の積をあらかじめ送信アカウントから払わなければなりません。
+
 If some gas is left after the execution, it is refunded in the same way.
+もし、実行後gasが残っていた場合、同じように(何と同じように?)返金されます。
 
 If the gas is used up at any point (i.e. it is negative),
-an out-of-gas exception is triggered, which reverts all modifications
-made to the state in the current call frame.
+もしgasがある値まで使われた場合(すなはち負の値)は、
+
+an out-of-gas exception is triggered,
+out-of-gas例外が発生します。
+
+which reverts all modifications made to the state in the current call frame.
+その例外は、その処理を呼んだcallによりもたらされた状態の変更を全て巻き戻します。
 
 .. index:: ! storage, ! memory, ! stack
 
