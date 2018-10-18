@@ -1,5 +1,5 @@
 ###################
-Solidity by Example
+Solidityコード例
 ###################
 
 .. index:: voting, ballot
@@ -7,7 +7,7 @@ Solidity by Example
 .. _voting:
 
 ******
-Voting
+投票
 ******
 
 The following contract is quite complex, but showcases
@@ -195,9 +195,9 @@ to vote to all participants. Can you think of a better way?
 
 .. index:: auction;blind, auction;open, blind auction, open auction
 
-*************
-Blind Auction
-*************
+******************
+非公開オークション
+******************
 
 In this section, we will show how easy it is to create a
 completely blind auction contract on Ethereum.

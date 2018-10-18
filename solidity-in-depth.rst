@@ -1,6 +1,6 @@
-#################
-Solidity in Depth
-#################
+####################
+Solidityの詳しい仕様
+####################
 
 This section should provide you with all you need to know about Solidity.
 If something is missing here, please contact us on

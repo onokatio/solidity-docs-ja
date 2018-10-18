@@ -2,9 +2,9 @@
 
 .. _contract_structure:
 
-***********************
-Structure of a Contract
-***********************
+*******************
+コントラクトの構造
+*******************
 
 Contracts in Solidity are similar to classes in object-oriented languages.
 Each contract can contain declarations of :ref:`structure-state-variables`, :ref:`structure-functions`,
@@ -13,7 +13,7 @@ Furthermore, contracts can inherit from other contracts.
 
 .. _structure-state-variables:
 
-State Variables
+ステート変数
 ===============
 
 State variables are values which are permanently stored in contract storage.
@@ -33,7 +33,7 @@ visibility.
 
 .. _structure-functions:
 
-Functions
+関数
 =========
 
 Functions are the executable units of code within a contract.
@@ -54,7 +54,7 @@ towards other contracts.
 
 .. _structure-function-modifiers:
 
-Function Modifiers
+関数の修飾子
 ==================
 
 Function modifiers can be used to amend the semantics of functions in a declarative way
@@ -82,7 +82,7 @@ Function modifiers can be used to amend the semantics of functions in a declarat
 
 .. _structure-events:
 
-Events
+イベント
 ======
 
 Events are convenience interfaces with the EVM logging facilities.
@@ -105,7 +105,7 @@ and can be used from within a dapp.
 
 .. _structure-struct-types:
 
-Struct Types
+構造体
 =============
 
 Structs are custom defined types that can group several variables (see
@@ -126,7 +126,7 @@ Structs are custom defined types that can group several variables (see
 
 .. _structure-enum-types:
 
-Enum Types
+列挙体
 ==========
 
 Enums can be used to create custom types with a finite set of 'constant values' (see

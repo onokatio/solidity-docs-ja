@@ -2,57 +2,49 @@
 
 .. _types:
 
-*****
-Types
-*****
+********
+変数の型
+********
 
-Solidity is a statically typed language, which means that the type of each
-variable (state and local) needs to be specified (or at least known -
-see :ref:`type-deduction` below) at
-compile-time. Solidity provides several elementary types which can be combined
-to form complex types.
-
-In addition, types can interact with each other in expressions containing
-operators. For a quick reference of the various operators, see :ref:`order`.
+Solidityは型が存在する言語（静的型付け）です。
 
 .. index:: ! value type, ! type;value
 
-Value Types
+型の種類
 ===========
-
-The following types are also called value types because variables of these
-types will always be passed by value, i.e. they are always copied when they
-are used as function arguments or in assignments.
 
 .. index:: ! bool, ! true, ! false
 
-Booleans
+真偽値型
 --------
 
-``bool``: The possible values are constants ``true`` and ``false``.
+``bool``: ``true`` と ``false`` の2種類で表現される。
 
-Operators:
+演算子:
 
-*  ``!`` (logical negation)
-*  ``&&`` (logical conjunction, "and")
-*  ``||`` (logical disjunction, "or")
-*  ``==`` (equality)
-*  ``!=`` (inequality)
+*  ``!`` (論理否定)
+*  ``&&`` (論理積, "and")
+*  ``||`` (論理和, "or")
+*  ``==`` (等しいかどうか)
+*  ``!=`` (等しくないかどうか)
 
 The operators ``||`` and ``&&`` apply the common short-circuiting rules. This means that in the expression ``f(x) || g(y)``, if ``f(x)`` evaluates to ``true``, ``g(y)`` will not be evaluated even if it may have side-effects.
+``||`` と ``&&`` は短絡が有効です。
+``||`` は、左辺が ``true`` の場合は右辺が評価されず（実行されず）、 ``&&`` は左辺が ``true`` の場合は右辺が
+つまり、 ``a() && b()`` や ``a() || b()`` をif文のかわりに使うことができます。
 
 .. index:: ! uint, ! int, ! integer
 
-Integers
+数値型
 --------
 
 ``int`` / ``uint``: Signed and unsigned integers of various sizes. Keywords ``uint8`` to ``uint256`` in steps of ``8`` (unsigned of 8 up to 256 bits) and ``int8`` to ``int256``. ``uint`` and ``int`` are aliases for ``uint256`` and ``int256``, respectively.
 
-Operators:
+演算子:
 
-* Comparisons: ``<=``, ``<``, ``==``, ``!=``, ``>=``, ``>`` (evaluate to ``bool``)
-* Bit operators: ``&``, ``|``, ``^`` (bitwise exclusive or), ``~`` (bitwise negation)
-* Arithmetic operators: ``+``, ``-``, unary ``-``, unary ``+``, ``*``, ``/``, ``%`` (remainder), ``**`` (exponentiation), ``<<`` (left shift), ``>>`` (right shift)
+* 比較演算子: ``<=``, ``<``, ``==``, ``!=``, ``>=``, ``>`` (``bool`` が帰ってきます)
+* ビット演算子: ``&``, ``|``, ``^`` (xor), ``~`` (ビット反転)
+* 算術演算子: ``+``, ``-``, 負の数の表現 ``-``, 正の数の表現 ``+``, ``*``, ``/``, ``%`` (あまり), ``**`` (べき乗), ``<<`` (左シフト), ``>>`` (右シフト)
 
 Division always truncates (it is just compiled to the ``DIV`` opcode of the EVM), but it does not truncate if both
 operators are :ref:`literals<rational_literals>` (or literal expressions).
@@ -72,7 +64,7 @@ sign extends. Shifting by a negative amount throws a runtime exception.
 
 .. index:: ! ufixed, ! fixed, ! fixed point number
 
-Fixed Point Numbers
+固定小数点数型
 -------------------
 
 .. warning::
@@ -98,8 +90,8 @@ Operators:
 
 .. _address:
 
-Address
--------
+アドレス型
+----------
 
 ``address``: Holds a 20 byte value (size of an Ethereum address). Address types also have members and serve as a base for all contracts.
 
@@ -218,7 +210,7 @@ Members:
     It is possible to use an array of bytes as ``byte[]``, but it is wasting a lot of space, 31 bytes every element,
     to be exact, when passing in calls. It is better to use ``bytes``.
 
-Dynamically-sized byte array
+動的配列
 ----------------------------
 
 ``bytes``:
@@ -517,8 +509,8 @@ them can be quite expensive, we have to think about whether we want them to be
 stored in **memory** (which is not persisting) or **storage** (where the state
 variables are held).
 
-Data location
--------------
+データの保管場所
+----------------
 
 Every complex type, i.e. *arrays* and *structs*, has an additional
 annotation, the "data location", about whether it is stored in memory or in storage. Depending on the
@@ -846,7 +838,7 @@ assigning it to a local variable, as in
 
 .. index:: !mapping
 
-Mappings
+マップ
 ========
 
 Mapping types are declared as ``mapping(_KeyType => _ValueType)``.

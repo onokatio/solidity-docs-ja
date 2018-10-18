@@ -31,7 +31,7 @@ crowdfunding, blind auctions, multi-signature wallets and more.
     Finally, blockchains have their own things to watch out for, so please take
     a look at the section :ref:`security_considerations`.
 
-Translations
+翻訳
 ------------
 
 This documentation is translated into several languages by community volunteers, but the English version stands as a reference.
@@ -42,7 +42,7 @@ This documentation is translated into several languages by community volunteers,
 * `Korean <http://solidity-kr.readthedocs.io>`_ (in progress)
 
 
-Useful links
+リンク
 ------------
 
 * `Ethereum <https://ethereum.org>`_
@@ -107,7 +107,7 @@ Discontinued:
 * `Ethereum Studio <https://live.ether.camp/>`_		
     Specialized web IDE that also provides shell access to a complete Ethereum environment.
 
-Solidity Tools
+ツール
 --------------
 
 * `Dapp <https://dapp.readthedocs.io>`_
@@ -125,7 +125,7 @@ Solidity Tools
 * `Doxity <https://github.com/DigixGlobal/doxity>`_
     Documentation Generator for Solidity.
 
-Third-Party Solidity Parsers and Grammars
+非公式なSoldity実装
 -----------------------------------------
 
 * `solidity-parser <https://github.com/ConsenSys/solidity-parser>`_
@@ -134,7 +134,7 @@ Third-Party Solidity Parsers and Grammars
 * `Solidity Grammar for ANTLR 4 <https://github.com/federicobond/solidity-antlr4>`_
     Solidity grammar for the ANTLR 4 parser generator
 
-Language Documentation
+言語仕様
 ----------------------
 
 On the next pages, we will first see a :ref:`simple smart contract <simple-smart-contract>` written
@@ -153,7 +153,7 @@ If you still have questions, you can try searching or asking on the
 site, or come to our `gitter channel <https://gitter.im/ethereum/solidity/>`_.
 Ideas for improving Solidity or this documentation are always welcome!
 
-Contents
+目次
 ========
 
 :ref:`Keyword Index <genindex>`, :ref:`Search Page <search>`

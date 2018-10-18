@@ -1,6 +1,6 @@
-********************************
-Layout of a Solidity Source File
-********************************
+*****************************
+Solidityコードの構造
+*****************************
 
 Source files can contain an arbitrary number of contract definitions, include directives
 and pragma directives.
@@ -9,7 +9,7 @@ and pragma directives.
 
 .. _version_pragma:
 
-Version Pragma
+バージョン
 ==============
 
 Source files can (and should) be annotated with a so-called version pragma to reject
@@ -39,7 +39,7 @@ the expression follows those used by `npm <https://docs.npmjs.com/misc/semver>`_
 
 .. _import:
 
-Importing other Source Files
+インポート
 ============================
 
 Syntax and Semantics
@@ -166,7 +166,7 @@ Other source code providers may be added in the future.
 
 .. index:: ! comment, natspec
 
-Comments
+コメント
 ========
 
 Single-line comments (``//``) and multi-line comments (``/*...*/``) are possible.
