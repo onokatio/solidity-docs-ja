@@ -1,88 +1,76 @@
 .. index:: ! contract
 
-##########
-Contracts
-##########
+#############
+コントラクト
+#############
 
-Contracts in Solidity are similar to classes in object-oriented languages. They
-contain persistent data in state variables and functions that can modify these
-variables. Calling a function on a different contract (instance) will perform
-an EVM function call and thus switch the context such that state variables are
-inaccessible.
+Solidityのコントラクトは、オブジェクト指向言語のクラスに似ています。
+永続的なデータ（メンバ）を持ち、その変数を変更できる関数（メソッド）を持ちます。
+異なるコントラクト（のインスタンス）の関数を呼び出す場合、EVMではcall命令が実行され、
+そのコントラクトの状態が変化します。しかし、直接変数を変更することはできません。
 
 .. index:: ! contract;creation, constructor
 
-******************
-Creating Contracts
-******************
+*******************
+コントラクトの作成
+*******************
 
-Contracts can be created "from outside" via Ethereum transactions or from within Solidity contracts.
+コントラクトは、Ethereumのトランザクションを通して外から作成するか、
+もしくはSolidityコントラクトの内部から作成できます。
 
-IDEs, such as `Remix <https://remix.ethereum.org/>`_, make the creation process seamless using UI elements.
+`Remix <https://remix.ethereum.org/>` のようなIDEでは、GUIを使ってコントラクトを作ることができます。
 
-Creating contracts programatically on Ethereum is best done via using the JavaScript API `web3.js <https://github.com/ethereum/web3.js>`_.
-As of today it has a method called `web3.eth.Contract <https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#new-contract>`_
-to facilitate contract creation.
+コントラクトを作り出すには、 `web3.js <https://github.com/ethereum/web3.js>`_ と呼ばれるJavascript APIを使うのがベストでしょう。
+現在では、コントラクトを作るために `web3.eth.Contract <https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#new-contract>`_ と呼ばれるメソッドが使えます。
 
-When a contract is created, its constructor (a function declared with the
-``constructor`` keyword) is executed once.
-A constructor is optional. Only one constructor is allowed, and this means
-overloading is not supported.
+コントラクトが作られたとき、 ``constructor`` という名前の関数が、コンストラクタとして、一回だけ実行されます。
+コンストラクタは必須ではありません。コンストラクタは一つのみ宣言可能で、オーバーライドは対応していません。
 
 .. index:: constructor;arguments
 
-Internally, constructor arguments are passed :ref:`ABI encoded <ABI>` after the code of
-the contract itself, but you do not have to care about this if you use ``web3.js``.
+内部的に、コンストラクタの引数は、コントラクト内部で :ref:`ABI encoded <ABI>` に渡されます。
+ただ、普段私達が ``web3.js`` を使うときには、これを気にする必要はありません。
 
-If a contract wants to create another contract, the source code
-(and the binary) of the created contract has to be known to the creator.
-This means that cyclic creation dependencies are impossible.
+もしコントラクトが別のコントラクトを作りたい場合、
+事前に作りたいコントラクトのソースコードとバイナリは公開されていなければいけません。
+つまり、コントラクトの作成が循環することはできません。
 
 ::
 
     pragma solidity ^0.4.22;
 
     contract OwnedToken {
-        // TokenCreator is a contract type that is defined below.
-        // It is fine to reference it as long as it is not used
-        // to create a new contract.
+        // TokenCreaterは、下で宣言したようなコントラクト（つまり、
+        // このコントラクトを作った親のインスタンス）を持ちます。
+        // コントラクトを生成しないかぎり、参照することができません。
         TokenCreator creator;
         address owner;
         bytes32 name;
 
-        // This is the constructor which registers the
-        // creator and the assigned name.
+        // これは、最初にコントラクトの作成者が名前とアドレスを登録するためのコンストラクタです。
         constructor(bytes32 _name) public {
-            // State variables are accessed via their name
-            // and not via e.g. this.owner. This also applies
-            // to functions and especially in the constructors,
-            // you can only call them like that ("internally"),
-            // because the contract itself does not exist yet.
+            // Ethereum上のステートの情報は、this.owner のようにして利用できます。
+            // また、msg.senderは内部からしか利用できません。
+            // コントラクトがまだ作成されていないので、内部からしか使えません。
             owner = msg.sender;
-            // We do an explicit type conversion from `address`
-            // to `TokenCreator` and assume that the type of
-            // the calling contract is TokenCreator, there is
-            // no real way to check that.
+            // TokenCreaterは、必ず `address` 型の値しか返さないため、
+            // 型を指定しなくても暗黙のうちに型が推測されます。
             creator = TokenCreator(msg.sender);
             name = _name;
         }
 
         function changeName(bytes32 newName) public {
-            // Only the creator can alter the name --
-            // the comparison is possible since contracts
-            // are implicitly convertible to addresses.
+            // クリエイターのみがcreatorの名前を変更できます。
+            // コントラクトをアドレスに暗黙的に変換されます。
             if (msg.sender == address(creator))
                 name = newName;
         }
 
         function transfer(address newOwner) public {
-            // Only the current owner can transfer the token.
+            // 現在のオーナーのみがトークンを送金できます。
             if (msg.sender != owner) return;
-            // We also want to ask the creator if the transfer
-            // is fine. Note that this calls a function of the
-            // contract defined below. If the call fails (e.g.
-            // due to out-of-gas), the execution here stops
-            // immediately.
+            // また、クリエイターに送金可能かどうか尋ねるようにしています。
+            // もし、失敗すれば、ここで実行は止まります。
             if (creator.isTokenTransferOK(owner, newOwner))
                 owner = newOwner;
         }
@@ -93,16 +81,13 @@ This means that cyclic creation dependencies are impossible.
            public
            returns (OwnedToken tokenAddress)
         {
-            // Create a new Token contract and return its address.
-            // From the JavaScript side, the return type is simply
-            // `address`, as this is the closest type available in
-            // the ABI.
+            // 新しいコントラクトを作成して、そのアドレスを返します。
+            // 返す型は `address` です。
             return new OwnedToken(name);
         }
 
         function changeName(OwnedToken tokenAddress, bytes32 name)  public {
-            // Again, the external type of `tokenAddress` is
-            // simply `address`.
+            // `tokenAddress` は `address` 型に暗黙的に変換されます。
             tokenAddress.changeName(name);
         }
 
